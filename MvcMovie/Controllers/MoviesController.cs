@@ -47,22 +47,34 @@ namespace MvcMovie.Controllers
             //return View(await movies.ToListAsync());
         }
 
-        // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            IQueryable<int> movieReviewQuery = from m in _context.Movie
+                                               orderby m.ID
+                                               select m.ID;
+
+            var movie = await _context.Movie
+                .SingleOrDefaultAsync(m => m.ID == id);
+
+            var reviews = from m in _context.Review
+                         select m;
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movie
-                .SingleOrDefaultAsync(m => m.ID == id);
             if (movie == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            var movieReviewVM = new MovieReview();
+            movieReviewVM.movie = movie;
+            movieReviewVM.mReview = new SelectList(await movieReviewQuery.Distinct().ToListAsync());
+            movieReviewVM.review = await reviews.ToListAsync();
+
+            return View(movieReviewVM);
         }
 
         // GET: Movies/Create
