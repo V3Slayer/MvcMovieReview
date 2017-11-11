@@ -74,13 +74,6 @@ namespace MvcMovie.Controllers
             var reviews = from m in _context.Review
                           select m;
 
-            foreach (var item in reviews)
-            {
-                Console.WriteLine("BLAH ID" + item.ID);
-                Console.WriteLine("BLAH2 MovieID" + item.MovieID);
-                Console.WriteLine("BLAH 3 mID" + movie.ID);
-            }
-
             if (id == null)
             {
                 return NotFound();

@@ -41,7 +41,8 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.MGenre.movies) {
+    @foreach (var item in Model.MGenre.movies)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -61,16 +62,25 @@
             <td>
                 <a class="btn btn-xs btn-default" asp-action="Details" asp-route-id="@item.ID">Details</a>
                 @{
-                    @foreach (var item2 in Model.MReview.review) {
+                    //var hasReview = "btn btn-xs btn-default";
+                    var hasReview2 = false;
+                    @foreach (var item2 in Model.MReview.review)
+                    {
                         Console.WriteLine("item1 ID" + item.ID + "item2 ID" + item2.MovieID);
+
                         @if (item.ID.Equals(item2.MovieID))
                         {
-                            <a class="btn btn-xs btn-default disabled" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            //hasReview += " deactivated";
+                            hasReview2 = true;
                         }
-                        else
-                        {
-                            <a class="btn btn-xs btn-default" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                        }
+                    }
+                    @if (hasReview2 == true)
+                    {
+                        <a disabled class="btn btn-xs btn-default disabled">Delete</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-xs btn-default" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                     }
                 }
             </td>

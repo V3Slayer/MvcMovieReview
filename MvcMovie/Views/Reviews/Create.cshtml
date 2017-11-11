@@ -22,6 +22,7 @@
                 <input asp-for="MovieReview" class="form-control" />
                 <span asp-validation-for="MovieReview" class="text-danger"></span>
             </div>
+            <input value="@(ViewContext.RouteData.Values["parameterName"])" id="MovieID" type="hidden" />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

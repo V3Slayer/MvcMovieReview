@@ -53,10 +53,13 @@
             {
             <tr>
                 <td>
-                    @item.MovieReview
+                    <p>@item.MovieReview</p>
+                    - @item.Name
+                    <hr />
                 </td>
                 <td>
-                    @item.Name
+                    <a class="btn btn-xs btn-default" asp-controller="Reviews" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                    <a class="btn btn-xs btn-default" asp-controller="Reviews" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                 </td>
                 @{
                     item.MovieID = (int)ViewData["mID"];

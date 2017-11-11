@@ -34,8 +34,8 @@
     }
 }
 
-a.disabled {
-    pointer-events: none;
+.disabled {
+    background-color: #d3d3d3;
 }
 
 .form-control-select {
