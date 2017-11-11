@@ -6,8 +6,8 @@ namespace MvcMovie.Models
 {
     public class Review
     {
-
-        [DatabaseGenerated(DatabaseGenerationOption.Identity)]
+        
+        //DatabaseGeneratedAttribute.HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         public int ID { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
@@ -17,5 +17,7 @@ namespace MvcMovie.Models
         [StringLength(100000, MinimumLength = 10)]
         [Required]
         public string MovieReview { get; set; }
+
+        public int MovieID { get; set; }
     }
 }

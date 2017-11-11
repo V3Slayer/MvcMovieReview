@@ -28,6 +28,12 @@ namespace MvcMovie.Controllers
             var movies = from m in _context.Movie
                          select m;
 
+            //var movie = await _context.Movie
+                //.SingleOrDefaultAsync(m => m.ID == id);
+
+            var reviews = from m in _context.Review
+                          select m;
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 movies = movies.Where(s => s.Title.Contains(searchString));
@@ -38,11 +44,20 @@ namespace MvcMovie.Controllers
                 movies = movies.Where(x => x.Genre == movieGenre);
             }
 
+            var movieReviewVM = new MovieReview();
+            //movieReviewVM.movie = movie;
+            movieReviewVM.mReview = new SelectList(await genreQuery.Distinct().ToListAsync());
+            movieReviewVM.review = await reviews.ToListAsync();
+
             var movieGenreVM = new MovieGenreViewModel();
             movieGenreVM.genres = new SelectList(await genreQuery.Distinct().ToListAsync());
             movieGenreVM.movies = await movies.ToListAsync();
 
-            return View(movieGenreVM);
+            var movieReviewModelVM = new MovieReviewModel();
+            movieReviewModelVM.MGenre = movieGenreVM;
+            movieReviewModelVM.MReview = movieReviewVM;
+
+            return View(movieReviewModelVM);
 
             //return View(await movies.ToListAsync());
         }
@@ -55,9 +70,16 @@ namespace MvcMovie.Controllers
 
             var movie = await _context.Movie
                 .SingleOrDefaultAsync(m => m.ID == id);
-
+            
             var reviews = from m in _context.Review
-                         select m;
+                          select m;
+
+            foreach (var item in reviews)
+            {
+                Console.WriteLine("BLAH ID" + item.ID);
+                Console.WriteLine("BLAH2 MovieID" + item.MovieID);
+                Console.WriteLine("BLAH 3 mID" + movie.ID);
+            }
 
             if (id == null)
             {
@@ -73,6 +95,8 @@ namespace MvcMovie.Controllers
             movieReviewVM.movie = movie;
             movieReviewVM.mReview = new SelectList(await movieReviewQuery.Distinct().ToListAsync());
             movieReviewVM.review = await reviews.ToListAsync();
+
+            ViewData["mID"] = movie.ID;
 
             return View(movieReviewVM);
         }

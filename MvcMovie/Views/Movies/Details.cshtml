@@ -49,6 +49,8 @@
         </tr>
         @foreach (var item in Model.review)
         {
+            if (item.MovieID == Model.movie.ID)
+            {
             <tr>
                 <td>
                     @item.MovieReview
@@ -56,10 +58,14 @@
                 <td>
                     @item.Name
                 </td>
+                @{
+                    item.MovieID = (int)ViewData["mID"];
+                }
             </tr>
+            }
         }
     </tbody>
 </table>
 <div>
-    <a class="btn btn-lg btn-info" asp-controller="Reviews" asp-action="Create" asp-route-id="@Model.movie.ID">Write a Review</a>
+    <a class="btn btn-lg btn-info" asp-controller="Reviews" asp-action="Create" asp-route-id="@ViewData["mID"]">Write a Review</a>
 </div>

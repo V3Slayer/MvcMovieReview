@@ -53,11 +53,16 @@ namespace MvcMovie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,MovieReview")] Review review)
+        public async Task<IActionResult> Create([Bind("ID,Name,MovieReview,MovieID")] Review review, int id)
         {
             if (ModelState.IsValid)
             {
+                review.MovieID = id;
                 _context.Add(review);
+                var blah = (int) _context.Review.LongCount();
+                review.ID = blah;
+                //_context.Review.ElementAt(blah)
+                Console.WriteLine("ID " + review.ID + ", Name " + review.Name + ", MovieReview " + review.MovieReview + ", MovieID " + review.MovieID);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -85,7 +90,7 @@ namespace MvcMovie.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,MovieReview")] Review review)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,MovieReview,MovieID")] Review review)
         {
             if (id != review.ID)
             {
