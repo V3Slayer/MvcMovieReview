@@ -117,8 +117,6 @@ namespace MvcMovie.Controllers
 
                 foreach (var item in movies)
                 {
-                    Console.WriteLine("HOI! " + item.ID);
-                    //Console.WriteLine("BLAH ID" + item.ID);
                     if (item.ID == review.MovieID)
                     {
                         ViewData["mTitle"] = item.Title;
