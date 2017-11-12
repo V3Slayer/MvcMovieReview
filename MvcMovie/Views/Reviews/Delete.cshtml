@@ -24,7 +24,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-default" />
-        <a class="btn btn-default" asp-controller="Movies" asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-warning" />
+        <a class="btn btn-default" asp-controller="Movies" asp-action="Details" asp-route-id="@ViewData["mID"]">Cancel</a>
     </form>
 </div>

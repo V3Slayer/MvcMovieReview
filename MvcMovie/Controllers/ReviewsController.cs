@@ -19,8 +19,19 @@ namespace MvcMovie.Controllers
         }
 
         // GET: Reviews/Create
-        public IActionResult Create()
+        public IActionResult Create(int? id)
         {
+            var movies = from m in _context.Movie
+                         select m;
+
+            foreach (var item in movies)
+            {
+                if (item.ID == id)
+                {
+                    ViewData["mTitle"] = item.Title;
+                    ViewData["mID"] = id;
+                }
+            }
             return View();
         }
 
@@ -35,7 +46,8 @@ namespace MvcMovie.Controllers
             {
                 review.MovieID = (int) id;
                 _context.Add(review);
-                ViewData["mID"] = id;
+               
+                ViewData["mID"] = review.MovieID;
                 //Console.WriteLine("ID " + review.ID + ", Name " + review.Name + ", MovieReview " + review.MovieReview + ", MovieID " + review.MovieID);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Movies", new { id = review.MovieID });
@@ -56,7 +68,21 @@ namespace MvcMovie.Controllers
             {
                 return NotFound();
             }
-            
+            ViewData["mID"] = review.MovieID;
+
+            var movies = from m in _context.Movie
+                         select m;
+
+            foreach (var item in movies)
+            {
+                if (item.ID == review.MovieID)
+                {
+                    Console.WriteLine("EDIT ITEM ID: " + item.ID);
+                    Console.WriteLine("EDIT MOVIE ID: " + review.MovieID);
+                    Console.WriteLine("EDIT TITLE: " + item.Title);
+                    ViewData["mTitle"] = item.Title;
+                }
+            }
 
             return View(review);
         }
@@ -91,7 +117,7 @@ namespace MvcMovie.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Index", "Movies");
+                return RedirectToAction("Details", "Movies", new { id = review.MovieID });
             }
             return View(review);
         }
@@ -120,6 +146,7 @@ namespace MvcMovie.Controllers
                     if (item.ID == review.MovieID)
                     {
                         ViewData["mTitle"] = item.Title;
+                        ViewData["mID"] = item.ID;
                     }
                 }
             }

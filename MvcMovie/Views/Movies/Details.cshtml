@@ -5,7 +5,7 @@
 }
 
 <div>
-    <h4>Movie Details</h4>
+    <h3>Movie Details</h3>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -32,6 +32,12 @@
         <dd>
             @Html.DisplayFor(model => model.movie.Price)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.movie.Rating)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.movie.Rating)
+        </dd>
     </dl>
 </div>
 <div>
@@ -44,7 +50,7 @@
     <tbody>
         <tr>
             <th>
-                <h4>Reviews</h4>
+                <h3>Reviews</h3>
             </th>
         </tr>
         @foreach (var item in Model.review)
